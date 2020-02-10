@@ -18,6 +18,12 @@ const userSchema = new mongoose.Schema({
       ref: 'Note'
     }
   ],
+  posts: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Post'
+    }
+  ],
 })
 
 // uses validator package to ensure that all attributes listed 
