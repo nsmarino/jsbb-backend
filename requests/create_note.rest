@@ -1,0 +1,8 @@
+post http://localhost:3001/api/notes
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI1ZTFmYTZmNTQxNzljMzNhOWM0YjNhNTIiLCJpYXQiOjE1Nzk0NTA3ODh9.K7LXur2OtGljjaxdO3kX0QsyCM3V7wJMwi3hNfnFcWs
+
+{
+    "content": "the sun will melt the snow",
+    "important": true
+}
