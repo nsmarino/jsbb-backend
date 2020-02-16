@@ -17,7 +17,10 @@ const getTokenFrom = request => {
 threadsRouter.get('/', async (request, response) => {
     const threads = await Thread
       .find({})
-      .populate('posts', { content: 1, date: 1 })
+      .populate({
+        path: 'posts',
+        populate: { path: 'user'}
+      })
       .populate('user', { username: 1 })
 
     response.json(threads.map(thread => thread.toJSON()))
@@ -26,7 +29,6 @@ threadsRouter.get('/', async (request, response) => {
 
 threadsRouter.post('/', async (request, response, next) => {
     const body = request.body
-    console.log(body)
     const token = getTokenFrom(request)
   
     try {  
@@ -71,6 +73,46 @@ threadsRouter.delete('/:id', async (request, response, next) => {
     await Thread.findByIdAndRemove(request.params.id)
     response.status(204).end()
   } catch (exception) {
+    next(exception)
+  }
+})
+
+threadsRouter.put('/:id', async (request, response, next) => {
+  const body = request.body
+  const token = getTokenFrom(request)
+
+  try {  
+    // authenticate user  
+    const decodedToken = jwt.verify(token, process.env.SECRET)                 
+    if (!token || !decodedToken.id) {                                          
+      return response.status(401).json({ error: 'token missing or invalid' })     
+    }                                                                          
+    const date = new Date()
+    const user = await User.findById(decodedToken.id)
+    const thread = await Thread.findById(request.params.id)
+    
+    const post = new Post({
+      content: body.post,
+      date: date,
+      user: user,
+      thread: thread
+    })
+    console.log(post)
+    const savedPost = await post.save()
+
+    thread.posts = thread.posts.concat(savedPost._id)
+    const threadWithPost = await thread.save()
+
+    updatedThread = await Thread
+      .findByIdAndUpdate(request.params.id, threadWithPost, { new: true })
+      .populate({
+        path: 'posts',
+        populate: { path: 'user'}
+      })
+      
+    response.json(updatedThread.toJSON())
+
+  } catch(exception) {
     next(exception)
   }
 })

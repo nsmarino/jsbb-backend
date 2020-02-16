@@ -1,8 +1,7 @@
-post http://localhost:3001/api/threads
+PUT http://localhost:3001/api/threads/5e499ffb85f4401850b57bab
 Content-Type: application/json
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imp1aWNlIiwiaWQiOiI1ZTQxOGJhMDU2YzJiZjFjOThlMDg4N2YiLCJpYXQiOjE1ODEzNTM5NTJ9.m_GjRGSPwmK1GiUjyMSXbQHD6OrS1xzSyhv9RiDXY2E
 
 {
-    "title": "alex g / big thief",
-    "post": "think this is my dream collab"
+    "post": "is big thief hoot"
 }
