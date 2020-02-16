@@ -12,18 +12,18 @@ const userSchema = new mongoose.Schema({
   },
   name: String,
   passwordHash: String,
-  notes: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Note'
-    }
-  ],
   posts: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Post'
     }
   ],
+  threads: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Thread'
+    }
+  ]
 })
 
 // uses validator package to ensure that all attributes listed 

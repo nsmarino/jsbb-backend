@@ -11,7 +11,7 @@ const cors = require('cors')
 
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
-
+const threadsRouter = require('./controllers/threads')
 const postsRouter = require('./controllers/posts')
 
 const middleware = require('./utils/middleware')
@@ -36,6 +36,7 @@ app.use(middleware.requestLogger)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 app.use('/api/posts', postsRouter)
+app.use('/api/threads', threadsRouter)
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)

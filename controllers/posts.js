@@ -41,6 +41,7 @@ postsRouter.post('/', async (request, response, next) => {
       return response.status(401).json({ error: 'token missing or invalid' })    
     }
     const user = await User.findById(decodedToken.id)
+    console.log(user)
     const post = new Post({
       content: body.content,
       date: new Date(),
@@ -65,6 +66,26 @@ postsRouter.delete('/:id', async (request, response, next) => {
     next(exception)
   }
 })
+
+// postsRouter.delete('/:id', async (request, response, next) => {
+//   try {
+//     const decodedToken = jwt.verify(request.token, process.env.SECRET)
+    
+//     if (!request.token || !decodedToken.id) {
+//       return response.status(401).json({ error: 'token missing/invalid' })
+//     }
+    
+//     const post = await Post.findById(request.params.id)
+
+//     if (post.user.toString() !== decodedToken.id.toString()) {
+//       return response.status(401).json({ error: 'user is not permitted to remove' })
+//     } 
+//     await Post.findByIdAndRemove(request.params.id)
+//     response.status(204).end()
+//   } catch (exception) {
+//     next(exception)
+//   }
+// })
 
 postsRouter.put('/:id', (request, response, next) => {
   const body = request.body
